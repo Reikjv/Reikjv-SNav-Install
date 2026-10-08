@@ -1,0 +1,73 @@
+# Move to .github/workflows/publish.yml to enable (requires workflow permission).
+name: Publish BlueOS interface package
+on:
+  workflow_dispatch:
+    inputs:
+      phase:
+        description: Publish image first; make GHCR package public; then publish catalog
+        type: choice
+        required: true
+        default: publish-image
+        options: [publish-image, publish-catalog]
+permissions:
+  contents: read
+jobs:
+  image:
+    if: inputs.phase == 'publish-image'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1
+        with:
+          platforms: arm
+      - name: Download verified ARMv7 base
+        run: |
+          curl -fL --retry 3 https://github.com/Reikjv/Reikjv-SNav-Install/releases/download/v0.3.0-beta.2-install.1/reikjv-snav-0.3.0-beta.2-armv7.tar.gz -o /tmp/base.tar.gz
+          echo '39ea01f88403086426bd552c9c8a0a66dee35b1fc75fae01616dbf246eed7309  /tmp/base.tar.gz' | sha256sum -c -
+          docker load -i /tmp/base.tar.gz
+      - name: Verify installer with real Docker and ARM emulation
+        run: bash tests/verify-install.sh /tmp/base.tar.gz
+      - name: Package UI default port and smoke-test
+        run: |
+          docker build --platform linux/arm/v7 -f distribution/Dockerfile -t ghcr.io/reikjv/reikjv-snav-install:0.3.0-beta.2-ui.1 .
+          docker run -d --name ui-smoke --platform linux/arm/v7 ghcr.io/reikjv/reikjv-snav-install:0.3.0-beta.2-ui.1
+          ready=false
+          for attempt in {1..40}; do
+            if docker exec ui-smoke python -c 'import json,urllib.request; r=json.load(urllib.request.urlopen("http://127.0.0.1:8099/health",timeout=2)); assert r["status"]=="ok"'; then ready=true; break; fi
+            sleep 1
+          done
+          test "$ready" = true
+          docker exec ui-smoke python -c 'import json,urllib.request; s=json.load(urllib.request.urlopen("http://127.0.0.1:8099/api/status")); assert not any(s["selection"].values()); assert not s["vehicle"]["connected"]'
+          docker rm -f ui-smoke
+      - name: Publish image to GitHub Container Registry
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          printf '%s' "$GH_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
+          docker push ghcr.io/reikjv/reikjv-snav-install:0.3.0-beta.2-ui.1
+          docker logout ghcr.io
+          echo 'Image published. Set the package visibility to Public, then run publish-catalog.' >> "$GITHUB_STEP_SUMMARY"
+  catalog:
+    if: inputs.phase == 'publish-catalog'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+      - name: Verify anonymous image access and create catalog
+        run: python3 distribution/create_catalog.py
+      - name: Publish the verified catalog
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add blueos-manifest.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish verified ARMv7 BlueOS catalog'
+            git push origin HEAD:main
+          fi
