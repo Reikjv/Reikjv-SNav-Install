@@ -1,9 +1,11 @@
 # Preparação da instalação pela interface BlueOS
 
-Status: arquivos preparados; imagem GHCR e catálogo ainda não publicados.
+Status: imagem GHCR e catálogo publicados e acessíveis sem login.
 O instalador por terminal da release continua disponível e funcional.
+[Testes ARM/QEMU aprovados](https://github.com/Reikjv/Reikjv-SNav-Install/actions/runs/37792781298).
+[Catálogo publicado](https://github.com/Reikjv/Reikjv-SNav-Install/actions/runs/37793217851).
 
-`publish.yml` deve ser ativado como `.github/workflows/publish.yml`.
+`publish.yml` está ativado como `.github/workflows/publish.yml`.
 A autenticação usada para enviar commits precisa da permissão `workflow`.
 O workflow usa o token temporário do próprio GitHub Actions para publicar
 o pacote; não exige colocar uma senha/token pessoal neste repositório.
@@ -11,9 +13,9 @@ o pacote; não exige colocar uma senha/token pessoal neste repositório.
 1. Ativar o workflow e executar a fase `publish-image`.
 2. A imagem só é enviada após testar o instalador com Docker real/QEMU e
    testar a imagem de interface ARMv7, com porta padrão 8099.
-3. No GitHub → Packages → reikjv-snav-install → Package settings, mudar
-   a visibilidade do pacote para **Public**. Repositório público não garante
-   que um pacote novo também seja público.
+3. Conferir que a imagem permite acesso público. Se necessário, no GitHub →
+   Packages → reikjv-snav-install → Package settings, mudar a visibilidade
+   do pacote para **Public**. Nesta publicação o acesso anônimo já funcionou.
 4. Executar a fase `publish-catalog`. Ela verifica acesso anônimo ao GHCR,
    arquitetura e comando da imagem antes de gerar `blueos-manifest.json`.
 5. Após verificar o catálogo publicado, no BlueOS → Extensions → engrenagem
@@ -23,7 +25,7 @@ o pacote; não exige colocar uma senha/token pessoal neste repositório.
 https://raw.githubusercontent.com/Reikjv/Reikjv-SNav-Install/main/blueos-manifest.json
 ```
 
-Essa URL só estará disponível depois da fase `publish-catalog` bem-sucedida.
+Essa URL foi verificada após a fase `publish-catalog` bem-sucedida.
 Mantenha o catálogo oficial e aplique a nova fonte. Pesquise Reikjv-SNav;
 a versão é beta, então pode ser necessário habilitar versões de pré-lançamento.
 

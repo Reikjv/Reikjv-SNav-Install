@@ -4,7 +4,28 @@ Distribuição pública para **ARMv7** (`arm` no Docker), versão **0.3.0-beta.2
 Integra SPRINT-Nav Mini ou Nortek Nucleus 1000 ao ArduSub. Esta versão é beta
 e ainda requer validação da fusão EKF e do controle no equipamento real.
 
-## Instalar pela internet
+## Instalar pela interface do BlueOS
+
+Com o BlueOS conectado à internet, abra **Extensions → engrenagem → +**.
+Mantenha o catálogo oficial e adicione uma fonte com nome **Reikjv** e URL:
+
+```text
+https://raw.githubusercontent.com/Reikjv/Reikjv-SNav-Install/main/blueos-manifest.json
+```
+
+Salve, clique **APPLY**, pesquise **Reikjv-SNav** e clique **GET**.
+Escolha `0.3.0-beta.2-ui.1`, a distribuição ARMv7 para a interface.
+Se necessário, habilite a exibição de versões beta/pré-lançamento.
+O programa é baixado do GitHub Container Registry sem login.
+O painel fica disponível em **http://blueos.local:8099/**.
+
+Se já instalou por terminal neste ROV: desarme, restaure as fontes no painel,
+desconecte e pare o contêiner antigo antes de instalar pela interface.
+Não execute duas instâncias juntas. O gerenciador do BlueOS não executa as
+guardas do nosso instalador: restaure as fontes e desconecte antes de atualizar
+ou remover pela interface. Preserve os dados do veículo.
+
+## Alternativa: instalar pelo terminal
 
 O BlueOS precisa estar conectado à internet. Mantenha o ROV desarmado.
 No BlueOS, habilite Pirate Mode, abra **Ferramentas → Terminal** e execute:
@@ -103,9 +124,15 @@ este repositório; as licenças de terceiros estão em `licenses/` e na imagem.
 A imagem ARMv7 foi produzida a partir do commit
 `aa83576e2a4025031334dae5c5051c1430dea9a0`, sem alteração do código de navegação.
 O instalador desta distribuição inicia essa imagem na porta 8099.
-O controle de instalação é verificado localmente com Docker/rede simulados
-em `tests/test_installer.py`. O roteiro `tests/verify-install.sh` permite
-verificar com Docker ARM/QEMU num runner Linux descartável; esse novo roteiro
-ainda não foi executado. A imagem da aplicação já havia passado por ensaios
-ARM sob emulação em sua origem. Nenhum desses ensaios substitui testes no
-BlueOS/Navigator real. O exemplo de workflow em `tests/` não está ativado.
+O controle de instalação passou por oito testes locais com Docker/rede
+simulados em `tests/test_installer.py`. O roteiro `tests/verify-install.sh`
+também passou com Docker real e ARM/QEMU: instalação com 8088 ocupada,
+checksum/arquitetura, bloqueio de fontes/transações pendentes, atualização,
+preservação de dados e rollback. A imagem para a interface passou pelo teste
+HTTP na porta 8099, iniciando sem conexão e sem fontes selecionadas.
+[Execução de verificação e publicação](https://github.com/Reikjv/Reikjv-SNav-Install/actions/runs/37792781298).
+
+O catálogo só foi publicado após verificar acesso anônimo à imagem, arquitetura
+ARMv7 e porta 8099. A instalação pelo gerenciador do BlueOS e a fusão EKF/controle
+ainda requerem validação no veículo real. O workflow ativo está em
+`.github/workflows/publish.yml`; o exemplo em `tests/` não está ativado.
