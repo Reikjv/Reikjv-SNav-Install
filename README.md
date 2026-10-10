@@ -1,6 +1,6 @@
 # Reikjv-SNav — instalação no BlueOS
 
-Distribuição pública para **ARMv7** (`arm` no Docker), versão **0.3.0-beta.3**.
+Distribuição pública para **ARMv7** (`arm` no Docker), versão **0.3.0-beta.4**.
 Integra SPRINT-Nav Mini ou Nortek Nucleus 1000 ao ArduSub. Esta versão é beta
 e ainda requer validação da fusão EKF e do controle no equipamento real.
 
@@ -14,7 +14,7 @@ https://raw.githubusercontent.com/Reikjv/Reikjv-SNav-Install/main/blueos-manifes
 ```
 
 Salve, clique **APPLY**, pesquise **Reikjv-SNav** e clique **GET**.
-Escolha `0.3.0-beta.3-ui.1`, a distribuição ARMv7 para a interface. A versão beta.2 continua no catálogo para referência.
+Escolha `0.3.0-beta.4-ui.1`, a distribuição ARMv7 para a interface. As versões beta.2 e beta.3 continuam no catálogo para referência.
 Se necessário, habilite a exibição de versões beta/pré-lançamento.
 O programa é baixado do GitHub Container Registry sem login.
 O painel fica disponível em **http://blueos.local:8099/**.
@@ -37,7 +37,7 @@ red-pill
 Depois, copie o bloco completo:
 
 ```bash
-curl -fL https://github.com/Reikjv/Reikjv-SNav-Install/releases/download/v0.3.0-beta.3-install.1/install.sh -o /tmp/reikjv-snav-install.sh && sudo bash /tmp/reikjv-snav-install.sh
+curl -fL https://github.com/Reikjv/Reikjv-SNav-Install/releases/download/v0.3.0-beta.4-install.1/install.sh -o /tmp/reikjv-snav-install.sh && sudo bash /tmp/reikjv-snav-install.sh
 ```
 
 O instalador identifica a arquitetura, baixa a imagem pronta (aproximadamente
@@ -90,14 +90,14 @@ autopiloto. Esta instalação usa Docker diretamente; não faz cadastro no Bazaa
 
 ## Instalação sem internet no BlueOS
 
-Baixe `install.sh` e `reikjv-snav-0.3.0-beta.3-armv7.tar.gz` nos
-[arquivos da release](https://github.com/Reikjv/Reikjv-SNav-Install/releases/tag/v0.3.0-beta.3-install.1)
+Baixe `install.sh` e `reikjv-snav-0.3.0-beta.4-armv7.tar.gz` nos
+[arquivos da release](https://github.com/Reikjv/Reikjv-SNav-Install/releases/tag/v0.3.0-beta.4-install.1)
 e envie os dois para a pasta inicial do File Browser do BlueOS.
 No terminal, depois de `red-pill`:
 
 ```bash
 cd /usr/blueos/userdata
-sudo bash install.sh --archive reikjv-snav-0.3.0-beta.3-armv7.tar.gz
+sudo bash install.sh --archive reikjv-snav-0.3.0-beta.4-armv7.tar.gz
 ```
 
 ## Diagnóstico
@@ -122,7 +122,7 @@ desta distribuição. Não há uma licença geral de código aberto concedida po
 este repositório; as licenças de terceiros estão em `licenses/` e na imagem.
 
 A imagem ARMv7 foi produzida a partir do commit
-`cf402449588e3b9c75b0395de3255dfef80e7216`.
+`7a93bf207d3521e2eadab8f9dc8c0ea99f5c3bc2`.
 O instalador desta distribuição inicia essa imagem na porta 8099.
 O controle de instalação passou por oito testes locais com Docker/rede
 simulados em `tests/test_installer.py`. O roteiro `tests/verify-install.sh`

@@ -78,7 +78,7 @@ class InstallerTests(unittest.TestCase):
         script = script.replace('/usr/blueos/extensions/reikjv-snav', posix(self.root / 'data'))
         script = script.replace('/var/cache/reikjv-snav', posix(self.root / 'cache'))
         script = script.replace('/var/lock/reikjv-snav-install.lock', posix(self.root / 'install.lock'))
-        script = script.replace('de41d43d5c4179acf6bf48d69a7e9f2e56d6468e51ce0d284147178310c9e675', hashlib.sha256(self.archive.read_bytes()).hexdigest())
+        script = script.replace('9e0af18cfb96ce2120abd5748cea8f1156356f7ba16a90c7beb1c97d1686d22f', hashlib.sha256(self.archive.read_bytes()).hexdigest())
         self.script = self.root / 'install.sh'
         self.script.write_text(script, encoding='utf-8', newline='\n')
 

@@ -37,5 +37,5 @@ guardas de atualização do nosso `install.sh`; restaure/desconecte antes de
 atualizar ou remover a extensão pela interface.
 
 O wrapper Docker altera apenas metadados e a porta padrão. A versão interna
-da aplicação permanece 0.3.0-beta.3 e ainda exige validação de EKF/controle
+da aplicação permanece 0.3.0-beta.4 e ainda exige validação de EKF/controle
 no equipamento real.
