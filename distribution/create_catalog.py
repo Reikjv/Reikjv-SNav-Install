@@ -42,15 +42,15 @@ def catalog(digest):
         'company_logo': 'https://raw.githubusercontent.com/Reikjv/Reikjv-SNav-Install/main/distribution/logo.png',
         'versions': {TAG: {
             'type': 'device-integration', 'tag': TAG, 'website': REPOSITORY,
-            # Sum of uncompressed base layer archives. The wrapper adds config only.
-            'images': [{'expanded_size': 244765696,
+            # Sum of uncompressed beta.3 base layer archives. The wrapper adds config only.
+            'images': [{'expanded_size': 244785664,
                         'platform': {'architecture': 'arm', 'variant': 'v7', 'os': 'linux'},
                         'digest': digest}],
             'authors': [{'name': 'Reikjv', 'email': '141414061+Reikjv@users.noreply.github.com'}],
             'filter_tags': ['navigation', 'dvl', 'ins'],
             'extra_links': {'documentation': REPOSITORY + '/blob/main/README.md'},
             'docs': REPOSITORY + '/blob/main/README.md',
-            'readme': '<p>Beta ARMv7. Painel na porta 8099. Requer ArduSub 4.7+. Antes de migrar, restaure as fontes e pare a instalação pelo terminal. Não execute duas instâncias. Validar EKF e controle no ROV.</p>',
+            'readme': '<p>Beta ARMv7. Painel na porta 8099. Requer ArduSub 4.7+. Antes de atualizar, use Desativar SNav e restaurar com o ROV desarmado. Não execute duas instâncias. Validar EKF e controle no ROV.</p>',
             'company': {'name': 'Reikjv', 'about': 'Navegação submarina'},
             'permissions': {'HostConfig': {
                 'NetworkMode': 'host',

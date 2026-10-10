@@ -19,10 +19,10 @@ Se necessário, habilite a exibição de versões beta/pré-lançamento.
 O programa é baixado do GitHub Container Registry sem login.
 O painel fica disponível em **http://blueos.local:8099/**.
 
-Se já instalou por terminal neste ROV: desarme, restaure as fontes no painel,
-desconecte e pare o contêiner antigo antes de instalar pela interface.
+Se já instalou por terminal neste ROV: desarme, clique **Desativar SNav e restaurar**
+no painel e pare o contêiner antigo antes de instalar pela interface.
 Não execute duas instâncias juntas. O gerenciador do BlueOS não executa as
-guardas do nosso instalador: restaure as fontes e desconecte antes de atualizar
+guardas do nosso instalador: use **Desativar SNav e restaurar** antes de atualizar
 ou remover pela interface. Preserve os dados do veículo.
 
 ## Alternativa: instalar pelo terminal
@@ -79,7 +79,7 @@ conjunto 1 do EKF. Confirmar comunicação não comprova fusão EKF ou Position 
 ## Instalação existente e dados
 
 O instalador conserva `/usr/blueos/extensions/reikjv-snav`. Para atualizar,
-primeiro restaure as fontes no painel, desconecte a extensão e mantenha o ROV
+primeiro use **Desativar SNav e restaurar** no painel e mantenha o ROV
 desarmado. A instalação é bloqueada quando existem fontes selecionadas ou
 transação pendente. O contêiner anterior é preservado parado; se a nova
 instância falhar, o instalador tenta restaurar o anterior.
