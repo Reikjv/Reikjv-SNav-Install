@@ -5,7 +5,7 @@ import urllib.parse
 import urllib.request
 
 IMAGE = 'reikjv/reikjv-snav-install'
-TAG = '0.3.0-beta.2-ui.1'
+TAG = '0.3.0-beta.3-ui.1'
 REPOSITORY = 'https://github.com/Reikjv/Reikjv-SNav-Install'
 
 
@@ -33,6 +33,7 @@ def public_image():
 
 
 def catalog(digest):
+    previous = json.loads((Path(__file__).resolve().parents[1] / 'blueos-manifest.json').read_text(encoding='utf-8'))
     return [{
         'identifier': 'reikjv.snav', 'name': 'Reikjv-SNav',
         'website': REPOSITORY, 'docker': f'ghcr.io/{IMAGE}',
@@ -56,7 +57,7 @@ def catalog(digest):
                 'Binds': ['/usr/blueos/extensions/reikjv-snav:/data'],
                 'RestartPolicy': {'Name': 'unless-stopped'}
             }}
-        }}
+        }, **previous[0]['versions']}
     }]
 
 
