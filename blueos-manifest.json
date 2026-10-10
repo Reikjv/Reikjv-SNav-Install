@@ -14,7 +14,7 @@
         "website": "https://github.com/Reikjv/Reikjv-SNav-Install",
         "images": [
           {
-            "expanded_size": 244765696,
+            "expanded_size": 244785664,
             "platform": {
               "architecture": "arm",
               "variant": "v7",
@@ -38,7 +38,7 @@
           "documentation": "https://github.com/Reikjv/Reikjv-SNav-Install/blob/main/README.md"
         },
         "docs": "https://github.com/Reikjv/Reikjv-SNav-Install/blob/main/README.md",
-        "readme": "<p>Beta ARMv7. Painel na porta 8099. Requer ArduSub 4.7+. Antes de migrar, restaure as fontes e pare a instalação pelo terminal. Não execute duas instâncias. Validar EKF e controle no ROV.</p>",
+        "readme": "<p>Beta ARMv7. Painel na porta 8099. Requer ArduSub 4.7+. Antes de atualizar, use Desativar SNav e restaurar com o ROV desarmado. Não execute duas instâncias. Validar EKF e controle no ROV.</p>",
         "company": {
           "name": "Reikjv",
           "about": "Navegação submarina"

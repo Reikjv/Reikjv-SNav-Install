@@ -57,7 +57,7 @@ def catalog(digest):
                 'Binds': ['/usr/blueos/extensions/reikjv-snav:/data'],
                 'RestartPolicy': {'Name': 'unless-stopped'}
             }}
-        }, **previous[0]['versions']}
+        }, **{key: value for key, value in previous[0]['versions'].items() if key != TAG}}
     }]
 
 
