@@ -35,11 +35,11 @@ def public_image():
 def catalog(digest):
     previous = json.loads((Path(__file__).resolve().parents[1] / 'blueos-manifest.json').read_text(encoding='utf-8'))
     return [{
-        'identifier': 'reikjv.snav', 'name': 'Reikjv-SNav',
+        'identifier': 'reikjv.snav', 'name': 'SNav',
         'website': REPOSITORY, 'docker': f'ghcr.io/{IMAGE}',
         'description': 'SPRINT-Nav Mini / Nortek Nucleus 1000 para ArduSub. Beta de bancada.',
-        'extension_logo': 'https://raw.githubusercontent.com/Reikjv/Reikjv-SNav-Install/main/distribution/logo.png',
-        'company_logo': 'https://raw.githubusercontent.com/Reikjv/Reikjv-SNav-Install/main/distribution/logo.png',
+        'extension_logo': 'https://raw.githubusercontent.com/Reikjv/Reikjv-SNav-Install/main/distribution/card.png',
+        'company_logo': 'https://raw.githubusercontent.com/Reikjv/Reikjv-SNav-Install/main/distribution/reikjv.png',
         'versions': {TAG: {
             'type': 'device-integration', 'tag': TAG, 'website': REPOSITORY,
             # Approximate uncompressed image size; the wrapper adds config only.
@@ -51,7 +51,7 @@ def catalog(digest):
             'extra_links': {'documentation': REPOSITORY + '/blob/main/README.md'},
             'docs': REPOSITORY + '/blob/main/README.md',
             'readme': '<p>Beta ARMv7. Painel na porta 8099. Nucleus: dados TCP na 9000 (com login) ou 9002. START/STOP explícitos no painel; desativar envia STOP somente após START confirmado pelo SNav. Requer ArduSub 4.7+. Antes de atualizar, use Desativar SNav e restaurar com o ROV desarmado. Não execute duas instâncias.</p>',
-            'company': {'name': 'Reikjv', 'about': 'Navegação submarina'},
+            'company': {'name': 'SNav', 'about': 'Navegação submarina · Reikjv'},
             'permissions': {'HostConfig': {
                 'NetworkMode': 'host',
                 'Binds': ['/usr/blueos/extensions/reikjv-snav:/data'],
