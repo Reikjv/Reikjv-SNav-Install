@@ -5,6 +5,7 @@ On Windows set BASH_EXE to the Git for Windows bash.exe path.
 """
 import hashlib
 import os
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -78,7 +79,9 @@ class InstallerTests(unittest.TestCase):
         script = script.replace('/usr/blueos/extensions/reikjv-snav', posix(self.root / 'data'))
         script = script.replace('/var/cache/reikjv-snav', posix(self.root / 'cache'))
         script = script.replace('/var/lock/reikjv-snav-install.lock', posix(self.root / 'install.lock'))
-        script = script.replace('9e0af18cfb96ce2120abd5748cea8f1156356f7ba16a90c7beb1c97d1686d22f', hashlib.sha256(self.archive.read_bytes()).hexdigest())
+        script, count = re.subn(r'(?m)^SHA256="[0-9a-f]{64}"$',
+                                f'SHA256="{hashlib.sha256(self.archive.read_bytes()).hexdigest()}"', script)
+        self.assertEqual(count, 1)
         self.script = self.root / 'install.sh'
         self.script.write_text(script, encoding='utf-8', newline='\n')
 

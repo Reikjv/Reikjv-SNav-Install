@@ -5,7 +5,7 @@ import urllib.parse
 import urllib.request
 
 IMAGE = 'reikjv/reikjv-snav-install'
-TAG = '0.3.0-beta.5-ui.1'
+TAG = '0.3.0-beta.6-ui.1'
 REPOSITORY = 'https://github.com/Reikjv/Reikjv-SNav-Install'
 
 
@@ -50,7 +50,7 @@ def catalog(digest):
             'filter_tags': ['navigation', 'dvl', 'ins'],
             'extra_links': {'documentation': REPOSITORY + '/blob/main/README.md'},
             'docs': REPOSITORY + '/blob/main/README.md',
-            'readme': '<p>Beta ARMv7. Painel na porta 8099. Nucleus: dados TCP na 9000 (com login) ou 9002. START/STOP explícitos no painel; desativar envia STOP somente após START confirmado pelo SNav. Requer ArduSub 4.7+. Antes de atualizar, use Desativar SNav e restaurar com o ROV desarmado. Não execute duas instâncias.</p>',
+            'readme': '<p>Beta ARMv7. Painel na porta 8099. Nucleus: TCP 9000 com login ou 9002; START automático se não houver dados, STOP ao desativar somente quando iniciado pelo SNav. Selecionar heading prepara ExternalNav e reinicia somente o ArduSub quando necessário. Requer ArduSub 4.7+. Antes de atualizar, use Desativar SNav e restaurar com o ROV desarmado. Não execute duas instâncias.</p>',
             'company': {'name': 'SNav', 'about': 'Navegação submarina · Reikjv'},
             'permissions': {'HostConfig': {
                 'NetworkMode': 'host',

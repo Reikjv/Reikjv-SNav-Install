@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 archive="$(realpath "$1")"
-image="reikjv-snav:0.3.0-beta.5"
+image="reikjv-snav:0.3.0-beta.6"
 data=/usr/blueos/extensions/reikjv-snav
 
 # Only the daemon architecture report is substituted. Images and Docker operations

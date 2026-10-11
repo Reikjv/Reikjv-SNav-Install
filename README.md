@@ -1,6 +1,6 @@
 # Reikjv-SNav — instalação no BlueOS
 
-Distribuição pública para **ARMv7** (`arm` no Docker), versão **0.3.0-beta.5**.
+Distribuição pública para **ARMv7** (`arm` no Docker), versão **0.3.0-beta.6**.
 Integra SPRINT-Nav Mini ou Nortek Nucleus 1000 ao ArduSub. Esta versão é beta
 e ainda requer validação da fusão EKF e do controle no equipamento real.
 
@@ -14,7 +14,7 @@ https://raw.githubusercontent.com/Reikjv/Reikjv-SNav-Install/main/blueos-manifes
 ```
 
 Salve, clique **APPLY**, pesquise **Reikjv-SNav** e clique **GET**.
-Escolha `0.3.0-beta.5-ui.1`, a distribuição ARMv7 para a interface. As versões anteriores continuam no catálogo para referência.
+Escolha `0.3.0-beta.6-ui.1`, a distribuição ARMv7 para a interface. As versões anteriores continuam no catálogo para referência.
 Se necessário, habilite a exibição de versões beta/pré-lançamento.
 O programa é baixado do GitHub Container Registry sem login.
 O painel fica disponível em **http://blueos.local:8099/**. Se a versão nova não aparecer, atualize a fonte de manifesto na engrenagem de Extensions e recarregue a página.
@@ -37,7 +37,7 @@ red-pill
 Depois, copie o bloco completo:
 
 ```bash
-curl -fL https://github.com/Reikjv/Reikjv-SNav-Install/releases/download/v0.3.0-beta.5-install.1/install.sh -o /tmp/reikjv-snav-install.sh && sudo bash /tmp/reikjv-snav-install.sh
+curl -fL https://github.com/Reikjv/Reikjv-SNav-Install/releases/download/v0.3.0-beta.6-install.1/install.sh -o /tmp/reikjv-snav-install.sh && sudo bash /tmp/reikjv-snav-install.sh
 ```
 
 O instalador identifica a arquitetura, baixa a imagem pronta (aproximadamente
@@ -73,9 +73,10 @@ DVL válida em bancada seca não é um teste de navegação.
 
 Para SPRINT use saída HNav configurada no equipamento, com protocolo/porta
 correspondentes. Para o Nucleus desta bancada, configure dados e comandos TCP
-em `9000` (a porta 9002 recusou a conexão), salve e clique Conectar. Com a
-medição parada, clique **Iniciar medição** no SNav; aguarde a confirmação START
-e os contadores AHRS/BT. Clique **Parar medição** para confirmar STOP. Ao usar
+em `9000` (a porta 9002 recusou a conexão), salve e clique Conectar. Com
+**Iniciar medição ao conectar** habilitado, o SNav envia START se o fluxo ainda
+estiver parado. Aguarde a confirmação e os contadores AHRS/BT. Clique
+**Parar medição** para confirmar STOP. Ao usar
 **Desativar e restaurar**, o SNav envia STOP somente se ele próprio confirmou
 START nesta conexão. Caso a rede caia, confira no software Nortek se a medição
 continua. Em teste fora d'água, acompanhe a temperatura. Requisitos do projeto: ArduSub 4.7+,
@@ -95,14 +96,14 @@ autopiloto. Esta instalação usa Docker diretamente; não faz cadastro no Bazaa
 
 ## Instalação sem internet no BlueOS
 
-Baixe `install.sh` e `reikjv-snav-0.3.0-beta.5-armv7.tar.gz` nos
-[arquivos da release](https://github.com/Reikjv/Reikjv-SNav-Install/releases/tag/v0.3.0-beta.5-install.1)
+Baixe `install.sh` e `reikjv-snav-0.3.0-beta.6-armv7.tar.gz` nos
+[arquivos da release](https://github.com/Reikjv/Reikjv-SNav-Install/releases/tag/v0.3.0-beta.6-install.1)
 e envie os dois para a pasta inicial do File Browser do BlueOS.
 No terminal, depois de `red-pill`:
 
 ```bash
 cd /usr/blueos/userdata
-sudo bash install.sh --archive reikjv-snav-0.3.0-beta.5-armv7.tar.gz
+sudo bash install.sh --archive reikjv-snav-0.3.0-beta.6-armv7.tar.gz
 ```
 
 ## Diagnóstico
@@ -127,7 +128,7 @@ desta distribuição. Não há uma licença geral de código aberto concedida po
 este repositório; as licenças de terceiros estão em `licenses/` e na imagem.
 
 A imagem ARMv7 foi produzida a partir do commit
-`7a93bf207d3521e2eadab8f9dc8c0ea99f5c3bc2`.
+`79b213f2f52f6fb3cbbab18f9ce87bb30bc912c7`.
 O instalador desta distribuição inicia essa imagem na porta 8099.
 O controle de instalação passou por oito testes locais com Docker/rede
 simulados em `tests/test_installer.py`. O roteiro `tests/verify-install.sh`

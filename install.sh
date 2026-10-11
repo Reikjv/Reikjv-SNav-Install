@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # Public ARMv7 installer. Run on the BlueOS host (red-pill), with sudo.
 set -Eeuo pipefail
-VERSION="0.3.0-beta.5"
-RELEASE="v0.3.0-beta.5-install.1"
+VERSION="0.3.0-beta.6"
+RELEASE="v0.3.0-beta.6-install.1"
 ASSET="reikjv-snav-${VERSION}-armv7.tar.gz"
-SHA256="1c604069bfcde4acbb9147e6d1b6599b59832ba795d23b9434f148fd8a309ac2"
+SHA256="659342acb55385ac8f40d8599029509abfbf0aee8575df2fb9cd3b821202accb"
 URL="https://github.com/Reikjv/Reikjv-SNav-Install/releases/download/${RELEASE}/${ASSET}"
 IMAGE="reikjv-snav:${VERSION}"
 NAME="reikjv-snav"
@@ -101,7 +101,7 @@ docker run -d --name "$NAME" \
 HEALTHY=false
 for attempt in {1..40}; do
   if [[ "$(docker inspect --format '{{.State.Running}}' "$NAME")" != true ]]; then break; fi
-  if docker exec "$NAME" python -c 'import json,urllib.request; r=json.load(urllib.request.urlopen("http://127.0.0.1:8099/health",timeout=2)); assert r == {"status":"ok","version":"0.3.0-beta.5"}' >/dev/null 2>&1; then
+  if docker exec "$NAME" python -c 'import json,urllib.request; r=json.load(urllib.request.urlopen("http://127.0.0.1:8099/health",timeout=2)); assert r == {"status":"ok","version":"0.3.0-beta.6"}' >/dev/null 2>&1; then
     HEALTHY=true
     break
   fi
