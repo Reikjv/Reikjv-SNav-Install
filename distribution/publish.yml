@@ -1,4 +1,3 @@
-# Move to .github/workflows/publish.yml to enable (requires workflow permission).
 name: Publish BlueOS interface package
 on:
   workflow_dispatch:
@@ -26,15 +25,15 @@ jobs:
           platforms: arm
       - name: Download verified ARMv7 base
         run: |
-          curl -fL --retry 3 https://github.com/Reikjv/Reikjv-SNav-Install/releases/download/v0.3.0-beta.5-install.1/reikjv-snav-0.3.0-beta.5-armv7.tar.gz -o /tmp/base.tar.gz
-          echo '1c604069bfcde4acbb9147e6d1b6599b59832ba795d23b9434f148fd8a309ac2  /tmp/base.tar.gz' | sha256sum -c -
+          curl -fL --retry 3 https://github.com/Reikjv/Reikjv-SNav-Install/releases/download/v0.3.0-beta.7-install.1/reikjv-snav-0.3.0-beta.7-armv7.tar.gz -o /tmp/base.tar.gz
+          echo '7b3cb0568af25c3f398899967a68593ceb24ee52fbdafbebc2fd859d84122b83  /tmp/base.tar.gz' | sha256sum -c -
           docker load -i /tmp/base.tar.gz
       - name: Verify installer with real Docker and ARM emulation
         run: bash tests/verify-install.sh /tmp/base.tar.gz
       - name: Package UI default port and smoke-test
         run: |
-          docker build --platform linux/arm/v7 -f distribution/Dockerfile -t ghcr.io/reikjv/reikjv-snav-install:0.3.0-beta.5-ui.1 .
-          docker run -d --name ui-smoke --platform linux/arm/v7 ghcr.io/reikjv/reikjv-snav-install:0.3.0-beta.5-ui.1
+          docker build --platform linux/arm/v7 -f distribution/Dockerfile -t ghcr.io/reikjv/reikjv-snav-install:0.3.0-beta.7-ui.1 .
+          docker run -d --name ui-smoke --platform linux/arm/v7 ghcr.io/reikjv/reikjv-snav-install:0.3.0-beta.7-ui.1
           ready=false
           for attempt in {1..40}; do
             if docker exec ui-smoke python -c 'import json,urllib.request; r=json.load(urllib.request.urlopen("http://127.0.0.1:8099/health",timeout=2)); assert r["status"]=="ok"'; then ready=true; break; fi
@@ -48,7 +47,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           printf '%s' "$GH_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
-          docker push ghcr.io/reikjv/reikjv-snav-install:0.3.0-beta.5-ui.1
+          docker push ghcr.io/reikjv/reikjv-snav-install:0.3.0-beta.7-ui.1
           docker logout ghcr.io
           echo 'Image published. Set the package visibility to Public, then run publish-catalog.' >> "$GITHUB_STEP_SUMMARY"
   catalog:

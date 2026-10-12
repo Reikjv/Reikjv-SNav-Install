@@ -1,8 +1,9 @@
 # Reikjv-SNav — instalação no BlueOS
 
-Distribuição pública para **ARMv7** (`arm` no Docker), versão **0.3.0-beta.6**.
-Integra SPRINT-Nav Mini ou Nortek Nucleus 1000 ao ArduSub. Esta versão é beta
-e ainda requer validação da fusão EKF e do controle no equipamento real.
+Distribuição pública para **ARMv7** (`arm` no Docker), versão **0.3.0-beta.7**.
+Integra SPRINT-Nav Mini ou Nortek Nucleus 1000 ao ArduSub e acrescenta uma
+primeira aba de observação do Nucleus no BlueBoat. Esta versão é beta e requer
+validação no equipamento real.
 
 ## Instalar pela interface do BlueOS
 
@@ -14,7 +15,7 @@ https://raw.githubusercontent.com/Reikjv/Reikjv-SNav-Install/main/blueos-manifes
 ```
 
 Salve, clique **APPLY**, pesquise **Reikjv-SNav** e clique **GET**.
-Escolha `0.3.0-beta.6-ui.1`, a distribuição ARMv7 para a interface. As versões anteriores continuam no catálogo para referência.
+Escolha `0.3.0-beta.7-ui.1`, a distribuição ARMv7 para a interface. As versões anteriores continuam no catálogo para referência.
 Se necessário, habilite a exibição de versões beta/pré-lançamento.
 O programa é baixado do GitHub Container Registry sem login.
 O painel fica disponível em **http://blueos.local:8099/**. Se a versão nova não aparecer, atualize a fonte de manifesto na engrenagem de Extensions e recarregue a página.
@@ -37,7 +38,7 @@ red-pill
 Depois, copie o bloco completo:
 
 ```bash
-curl -fL https://github.com/Reikjv/Reikjv-SNav-Install/releases/download/v0.3.0-beta.6-install.1/install.sh -o /tmp/reikjv-snav-install.sh && sudo bash /tmp/reikjv-snav-install.sh
+curl -fL https://github.com/Reikjv/Reikjv-SNav-Install/releases/download/v0.3.0-beta.7-install.1/install.sh -o /tmp/reikjv-snav-install.sh && sudo bash /tmp/reikjv-snav-install.sh
 ```
 
 O instalador identifica a arquitetura, baixa a imagem pronta (aproximadamente
@@ -82,6 +83,18 @@ START nesta conexão. Caso a rede caia, confira no software Nortek se a mediçã
 continua. Em teste fora d'água, acompanhe a temperatura. Requisitos do projeto: ArduSub 4.7+,
 conjunto 1 do EKF. Confirmar comunicação não comprova fusão EKF ou Position Hold.
 
+## Primeiro teste no BlueBoat
+
+Na aba **BlueBoat · Nucleus**, configure o IP/porta do Nucleus e o endpoint
+MAVLink do ArduRover; conecte com o barco desarmado. Confira heartbeat, fix GPS,
+bottom lock, velocidade e altitude do DVL. **Baixar CSV GPS/ALTI** guarda as
+leituras de distância ao fundo junto às coordenadas, sem ainda calcular uma
+batimetria corrigida. **Transmitir para diagnóstico** envia velocidade DVL por
+MAVLink somente após checar os parâmetros do EKF; **Baixar CSV do ensaio**
+registra a comparação. Esse ensaio não muda o Loiter, não seleciona uma fonte
+no EKF e não confirma aceitação das mensagens pelo autopiloto. Desconectar ou
+reiniciar desliga a transmissão. Faça a validação com montagem rígida e na água.
+
 ## Instalação existente e dados
 
 O instalador conserva `/usr/blueos/extensions/reikjv-snav`. Para atualizar,
@@ -96,14 +109,14 @@ autopiloto. Esta instalação usa Docker diretamente; não faz cadastro no Bazaa
 
 ## Instalação sem internet no BlueOS
 
-Baixe `install.sh` e `reikjv-snav-0.3.0-beta.6-armv7.tar.gz` nos
-[arquivos da release](https://github.com/Reikjv/Reikjv-SNav-Install/releases/tag/v0.3.0-beta.6-install.1)
+Baixe `install.sh` e `reikjv-snav-0.3.0-beta.7-armv7.tar.gz` nos
+[arquivos da release](https://github.com/Reikjv/Reikjv-SNav-Install/releases/tag/v0.3.0-beta.7-install.1)
 e envie os dois para a pasta inicial do File Browser do BlueOS.
 No terminal, depois de `red-pill`:
 
 ```bash
 cd /usr/blueos/userdata
-sudo bash install.sh --archive reikjv-snav-0.3.0-beta.6-armv7.tar.gz
+sudo bash install.sh --archive reikjv-snav-0.3.0-beta.7-armv7.tar.gz
 ```
 
 ## Diagnóstico
